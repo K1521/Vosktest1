@@ -50,7 +50,8 @@ string Convert(Int64 i)
     if (i < 1000)
     {
         return units[i / 100] + " Hundred"
-        + ((i % 100 > 0) ? " And " + Convert(i % 100) : "");
+        //+ ((i % 100 > 0) ? " And " + Convert(i % 100) : "");
+        +((i % 100 > 0) ? " " + Convert(i % 100) : "");
     }
     if (i < 100000)
     {
@@ -133,7 +134,7 @@ void sourceStream_DataAvailable(object sender, WaveInEventArgs e)
             Console.WriteLine(res);
             lastpartial = null;
 
-            if (vtext.text == "felice stop")
+            if (vtext.text == "felice shutdown")
             {
                 running = false;
                 lock (runningpulse) Monitor.Pulse(runningpulse);
