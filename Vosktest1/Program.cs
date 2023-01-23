@@ -79,7 +79,7 @@ while (k < 1000000000) {
 for (int j = 0; j < 1000; j++)
     {
         int i= rnd.Next(1, k);
-        if (i < 1000000 && Convert(i).ToLower()!= NumberConverter.NumberToWord(i)) { 
+        if (i < 100000 && Convert(i).ToLower()!= NumberConverter.NumberToWord(i)) { 
             Console.WriteLine(i+ ": " + Convert(i).ToLower());
             Console.WriteLine(i + ": " + NumberConverter.NumberToWord(i));
         }
@@ -119,7 +119,7 @@ for (int i = 0; i < 100; i++)
 }
 
 */
-
+//actual program
 Console.WriteLine(System.AppDomain.CurrentDomain.BaseDirectory);
 string modelpath= System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory,"..", "..",  "..", "voskmodel", "vosk-model-small-en-us-0.15");
 Model model = new Model(modelpath);
