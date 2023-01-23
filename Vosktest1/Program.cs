@@ -88,8 +88,14 @@ for (int j = 0; j < 1000; j++)
             Console.WriteLine(i + ": " + NumberConverter.NumberToWord(i));
             Console.WriteLine();
         }
+        int num;
+        if(NumberConverter.TryWordToNumber(NumberConverter.NumberToWord(i),out num))
+        {
+            if(num!=i)
+                Console.WriteLine((int)num+" "+i);
+        }else
+            Console.WriteLine(i + ": " + NumberConverter.NumberToWord(i)+" "+num);
 
-        
     }
     k *= 10;
 }
