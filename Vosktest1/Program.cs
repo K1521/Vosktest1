@@ -104,7 +104,7 @@ for (int j = 0; j < 1000; j++)
 
 for (int i = 0; i <= 10000; i++)
 {
-    var n = Convert(i).ToLower();
+    var n = NumberConverter.NumberToWord(i).ToLower();
     //Console.WriteLine($"[{n}]");
     grammarlist.Add($"felice set linear {n}");
     grammarlist.Add($"felice set inclination {n}");
@@ -192,6 +192,8 @@ void sourceStream_DataAvailable(object sender, WaveInEventArgs e)
 
 waveIn.DataAvailable += new EventHandler<WaveInEventArgs>(sourceStream_DataAvailable);
 //waveIn.RecordingStopped += new EventHandler<StoppedEventArgs>(WaveIn_RecordingStopped);
+
+
 waveIn.StartRecording();
 while (running)lock(runningpulse)
     Monitor.Wait(runningpulse, 10000);
