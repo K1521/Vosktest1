@@ -31,6 +31,8 @@ var grammarlist = new List<string> {
 "[unk]",
 "felice shutdown"};
 
+grammarlist.AddRange(NumberConverter.other.Concat(NumberConverter.tens).Concat(NumberConverter.ones).Distinct<string>());
+
 string[] units = { "Zero", "One", "Two", "Three",
 "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
 "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
@@ -159,6 +161,10 @@ void sourceStream_DataAvailable(object sender, WaveInEventArgs e)
         var vtext = JsonSerializer.Deserialize<vosktext>(res);
         if (vtext.text != "") { 
             Console.WriteLine(res);
+            if(NumberConverter.TryWordToNumber(vtext.text, out int num)) { 
+                Console.WriteLine(num);
+                Console.WriteLine(NumberConverter.NumberToWord(num));
+            }
             lastpartial = null;
 
             if (vtext.text == "felice shutdown")

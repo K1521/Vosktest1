@@ -10,8 +10,9 @@ namespace Vosktest1
 {
     internal static class NumberConverter
     {
-        public static ReadOnlyCollection<string> ones = Array.AsReadOnly(new string[]{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" , "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" });
-        public static ReadOnlyCollection<string> tens = Array.AsReadOnly(new string[]{ null, "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" });
+        public static readonly ReadOnlyCollection<string> ones  = Array.AsReadOnly(new string[]{ "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine" , "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" });
+        public static readonly ReadOnlyCollection<string> tens  = Array.AsReadOnly(new string[]{ "zero", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" });
+        public static readonly ReadOnlyCollection<string> other = Array.AsReadOnly(new string[]{"minus", "hundred" , "thousand", "million", "billion" });
         static Dictionary<string, int> modifiers = new Dictionary<string, int>() {
             {"billion", 1000000000},
             {"million", 1000000},
@@ -21,10 +22,11 @@ namespace Vosktest1
 
 
 
+
         public static string NumberToWord(int number)
         {
             if (number < 0) 
-                return "minus " + NumberToWord(number);
+                return "minus " + NumberToWord(-number);
 
             if (number < 20)
                 return ones[number];
@@ -130,8 +132,10 @@ namespace Vosktest1
                 else if (curword == "hundred")
                 {
                     if (!(onesflag || tensflag)) current = 1;
+                    
+                    if (hunflag || current>19) valid = false;
+
                     current *= 100;
-                    if (hunflag) valid = false;
                     hunflag = true;
                     onesflag = tensflag = false;
                 }
