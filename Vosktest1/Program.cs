@@ -72,6 +72,27 @@ string Convert(Int64 i)
     + ((i % 1000000000 > 0) ? " " + Convert(i % 1000000000) : "");
 }
 
+Random rnd = new Random();
+
+int k = 1;
+while (k < 1000000000) { 
+for (int j = 0; j < 1000; j++)
+    {
+        int i= rnd.Next(1, k);
+        if (i < 1000000 && Convert(i).ToLower()!= NumberConverter.NumberToWord(i)) { 
+            Console.WriteLine(i+ ": " + Convert(i).ToLower());
+            Console.WriteLine(i + ": " + NumberConverter.NumberToWord(i));
+        }
+        if (NumberConverter.WordToNumber(NumberConverter.NumberToWord(i)) != i) {
+            Console.WriteLine(i + ": " + NumberConverter.WordToNumber(NumberConverter.NumberToWord(i)));
+            Console.WriteLine(i + ": " + NumberConverter.NumberToWord(i));
+            Console.WriteLine();
+        }
+
+        
+    }
+    k *= 10;
+}
 
 for (int i = 0; i <= 2000; i++)
 {
