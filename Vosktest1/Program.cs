@@ -102,7 +102,7 @@ for (int j = 0; j < 1000; j++)
     k *= 10;
 }
 
-for (int i = 0; i <= 2000; i++)
+for (int i = 0; i <= 10000; i++)
 {
     var n = Convert(i).ToLower();
     //Console.WriteLine($"[{n}]");
