@@ -10,7 +10,7 @@ namespace Vosktest1
     internal class NumberConverter
     {
         static string[] ones = { "zero","one", "two", "three", "four", "five", "six", "seven", "eight", "nine" , "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };
-        static string[] tens = {"","ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
+        static string[] tens = {null,"ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety" };
         static Dictionary<string, int> modifiers = new Dictionary<string, int>() {
             {"billion", 1000000000},
             {"million", 1000000},
@@ -83,11 +83,52 @@ namespace Vosktest1
 
         public static bool TryWordToNumber(string word, out int number)
         {
+            string[] words = word.Split(" ");
+            number = 0;
+
+            if(words.Length == 0) return false;
+
+            bool minusflag = words[0]== "minus";
+            if (words.Length == 1 && minusflag) return false;
+
+            //[one hundred ninty two  thousand] [one-twenty hundred] [forty] [five]
+            
+
+            bool valid = true;
+            int current = 0;
+            for (int i=minusflag?1:0;i<words.Length;i++)
+            {
+                string curword = words[i];
+
+
+                int n;
+                if ((n = Array.IndexOf(ones, curword))! >= 0)
+                    current += n;
+                else if ((n = Array.IndexOf(tens, curword))! >= 0)
+                    current += n * 10;
+                else if (curword == "hundred")
+                    current *= 100;
+                else
+                {
+                    if (current == 0) current = 1;
+                    number += current * modifiers[curword];
+                    current = 0;
+                }
+            }
+
+            number += current;
+            if (minusflag)
+                number =- number;
+            return valid;
+        }
+
+        /*public static bool TryWordToNumber(string word, out int number)
+        {
             number = WordToNumber(word);
             if (word != NumberToWord(number))
                 return false;//TODO doesnt work in all cases obviously 
             return true;
-        }
+        }*/
         /*private static int WordToNumber1900(string[] words,ref int i)
         {
             //[one hundred twenty two thousand] [one hundred] [forty] [five]
