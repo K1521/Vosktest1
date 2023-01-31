@@ -2,6 +2,7 @@
 using NAudio.Wave;
 using System.Reflection;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Vosk;
 using Vosktest1;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -98,8 +99,34 @@ for (int j = 0; j < 1000; j++)
         }else
             Console.WriteLine(i + ": " + NumberConverter.NumberToWord(i)+" "+num);
 
+        
+        Match m = Regex.Match(NumberConverter.NumberToWord(i),"^"+ NumberConverter.renum+"$", RegexOptions.IgnoreCase);
+        if (!m.Success)
+            //Console.WriteLine("Found '{0}' at position {1}.", m.Value, m.Index);
+        {
+            Console.WriteLine(i + ": " + NumberConverter.NumberToWord(i));
+            Console.WriteLine(":(");
+            Console.WriteLine();
+        }
+
+        
+
     }
     k *= 10;
+}
+
+Regex re =new Regex("^" + NumberConverter.renum + "$");
+
+for (int i = 0; i < 10000000; i++) {
+    Match m = re.Match(NumberConverter.NumberToWord(i));
+    if (!m.Success)
+    //Console.WriteLine("Found '{0}' at position {1}.", m.Value, m.Index);
+    {
+        Console.WriteLine(i + ": " + NumberConverter.NumberToWord(i));
+        Console.WriteLine(":(");
+        Console.WriteLine();
+    }
+    if (i % 100000 == 0) Console.WriteLine(i);
 }
 
 for (int i = 0; i <= 10000; i++)

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Vosktest1
@@ -20,7 +21,15 @@ namespace Vosktest1
             {"hundred", 100}
         };
 
+        public static Regex renum;
+        static NumberConverter()
+        {
+            string s1_99 = @$"(({string.Join("|", ones.Skip(1))})|(({string.Join("|", tens.Skip(2))})(\s({string.Join("|", ones.Skip(1).Take(9))}))?))";
+            string s1_999 = @$"((({s1_99}\s)?hundred(\s{s1_99})?)|{s1_99})";
+            string snumberpart = @$"(({s1_999}\s)?({string.Join("|", other.Skip(2))})(\s{s1_999})?)";
+            renum = new Regex(@$"zero|((minus\s)?({snumberpart}\s)*({snumberpart}|{s1_999}))");
 
+        }
 
 
         public static string NumberToWord(int number)
